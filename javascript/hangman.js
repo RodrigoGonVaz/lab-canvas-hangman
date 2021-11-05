@@ -1,36 +1,76 @@
 class Hangman {
+  //expects an array of words as the single parameter.
   constructor(words) {
+     //all the words passed to the constructor as an argument will be saved in this property.
     this.words = words;
-    // ... your code goes here
+    //when the class is instantiated, call the method pickWord() and save the result to the property secretWord
+    this.secretWord = this.pickWord();
+    //an array in which we will store the letters that the user has already picked 
+    this.letters = [];
+    //a string to store the letters user chose and guessed. 
+    this.guessedLetters = '';
+    this.errorsLeft = 10;
   }
 
   pickWord() {
-    // ... your code goes here
+    // ---------------[Este random hace que vaya por una i del array de palabras]
+    return `${this.words[Math.floor(Math.random()* this.words.length)]}`
   }
 
   checkIfLetter(keyCode) {
-    // ... your code goes here
+    if (keyCode > 64 && keyCode < 91) {
+      return true
+    } else {
+      return false
+    }
   }
-
+  
+      // a method that should check if the letter passed as an argument has already been pressed. 
+      //It should return true if it was not or false in the opposite case.
   checkClickedLetters(letter) {
-    // ... your code goes here
+
+        if (this.letters.includes(letter)) {
+          return false
+        } else {
+          return true;
+    }
   }
 
+      //a method that should add the passed letter to the guessedLetters property. 
+      //This could be a good place to check if the user won.
   addCorrectLetter(letter) {
-    // ... your code goes here
-  }
+
+     this.guessedLetters +=`${letter}`
+    
+   }
+  
 
   addWrongLetter(letter) {
-    // ... your code goes here
+    this.errorsLeft --;
   }
 
   checkGameOver() {
-    // ... your code goes here
+    if (this.errorsLeft === 0) {
+      return true;
+    } else { 
+      return false; 
+    }
+  }
+   //a method that should check if the user won and return the corresponding boolean value.
+  checkWinner() {
+    let secArr = this.secretWord.split("");
+    let guessArr = this.guessedLetters.split("")
+    for (let i = 0; i < this.secretWord.length; i++) {
+      if (guessArr.includes(secArr[i])){
+        return true;
+      } else {
+        return false;
+      } 
+      
+    }
   }
 
-  checkWinner() {
-    // ... your code goes here
-  }
+
 }
 
 let hangman;
